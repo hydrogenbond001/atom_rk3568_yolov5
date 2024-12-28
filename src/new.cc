@@ -236,7 +236,7 @@ int main(int argc, char **argv)
 
     //const char* video_path = "/home/orangepi/rknn-cpp-Multithreading-main/jntm.mp4";
     //cv::VideoCapture cap("/home/orangepi/rknn-cpp-Multithreading-main/jntm.mp4");
-    cv::VideoCapture cap(0);
+    cv::VideoCapture cap(9);
     //cv::VideoCapture cap("/home/orangepi/rknn-cpp-Multithreading-main/");
     if (!cap.isOpened())
     {
@@ -328,7 +328,7 @@ int main(int argc, char **argv)
 	   serialPuts(fd,"\r\n");
         // Show image
         cv::cvtColor(img, img, cv::COLOR_RGB2BGR);
-        cv::imshow("Detection", img);
+        #cv::imshow("Detection", img);
 
         // Release RKNN outputs
         rknn_outputs_release(ctx, io_num.n_output, outputs);
