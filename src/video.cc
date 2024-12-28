@@ -164,9 +164,11 @@ int main(int argc, char **argv)
     const float nms_threshold = NMS_THRESH;
     const float box_conf_threshold = BOX_THRESH;
     struct timeval start_time, stop_time;
-
-    char *model_name = "./model/RK3588/yolov5s.rknn";
-    const char* p="hello";
+    
+    char *model_name = (char *)argv[1];
+    char *video_name = (char *)argv[2];
+    //char *model_name = "./model/RK3588/yolov5s.rknn";
+    //const char* p="hello";
 
     printf("Loading model...\n");
     int model_data_size = 0;
@@ -235,7 +237,7 @@ int main(int argc, char **argv)
 
     //const char* video_path = "/home/orangepi/rknn-cpp-Multithreading-main/jntm.mp4";
     //cv::VideoCapture cap("/home/orangepi/rknn-cpp-Multithreading-main/jntm.mp4");
-    cv::VideoCapture cap(0);
+    cv::VideoCapture cap(video_name);
     //cv::VideoCapture cap("/home/orangepi/rknn-cpp-Multithreading-main/");
     if (!cap.isOpened())
     {
