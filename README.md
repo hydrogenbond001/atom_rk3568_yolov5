@@ -12,8 +12,7 @@
 # 使用说明
 ### 演示
   * 系统需安装有**OpenCV**
-  * 下载Releases中的测试视频于项目根目录,运行build-linux_RK3588.sh
-  * 可切换至root用户运行performance.sh定频提高性能和稳定性
+  * 下载Releases中的测试视频于项目根目录,运行build-linux_RK3568.sh
   * 编译完成后进入install运行命令./rknn_yolov5_demo **模型所在路径** **视频所在路径/摄像头序号**
 
 ### 部署应用
@@ -33,6 +32,8 @@
 * 异常处理尚未完善, 目前仅支持rk3588/rk3588s下的运行
 
 # Acknowledgements
+* https://github.com/leafqycc/rknn-cpp-Multithreading
+* https://github.com/hydrogenbond001/rknn-yolov5-cpp
 * https://github.com/rockchip-linux/rknpu2
 * https://github.com/senlinzhan/dpool
 * https://github.com/ultralytics/yolov5
