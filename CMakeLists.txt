@@ -47,8 +47,8 @@ include_directories( ${CMAKE_SOURCE_DIR}/include)
 
 add_executable(rknn_yolov5_demo
 		#src/new.cc
-		#src/video.cc     #detect video
-		src/pic.cc        #detect picture
+		src/video.cc     #detect video
+		#src/pic.cc        #detect picture
     src/postprocess.cc
     src/preprocess.cc
     #src/rkYolov5s.cc

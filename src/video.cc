@@ -164,11 +164,31 @@ int main(int argc, char **argv)
     const float nms_threshold = NMS_THRESH;
     const float box_conf_threshold = BOX_THRESH;
     struct timeval start_time, stop_time;
-    
+
+    if (argc <= 2) {
+        std::cerr << "Usage: " << argv[0] << " < modle_address> <media direction>" << std::endl;
+        return -1;
+    }
+
     char *model_name = (char *)argv[1];
-    char *video_name = (char *)argv[2];
-    //char *model_name = "./model/RK3588/yolov5s.rknn";
-    //const char* p="hello";
+    //char *video_name = (char *)argv[2];//std::stoi(argv[1]);
+    std::string input = argv[2]; // 获取输入参数
+    cv::VideoCapture cap;
+
+    // 判断输入参数是否为数字（摄像头编号）还是文件路径
+    try {
+        int camera_id = std::stoi(input); // 尝试将输入解析为摄像头编号
+        cap.open(camera_id);             // 打开摄像头
+    } catch (...) {
+        cap.open(input); // 如果解析失败，假定输入为视频文件路径
+    }
+
+    // cv::VideoCapture cap(10);
+    // if (!cap.isOpened())
+    // {
+    //     printf("Error opening video capture\n");
+    //     return -1;
+    // }
 
     printf("Loading model...\n");
     int model_data_size = 0;
@@ -235,16 +255,8 @@ int main(int argc, char **argv)
     inputs[0].fmt = RKNN_TENSOR_NHWC;
     inputs[0].pass_through = 0;
 
-    //const char* video_path = "/home/orangepi/rknn-cpp-Multithreading-main/jntm.mp4";
-    //cv::VideoCapture cap("/home/orangepi/rknn-cpp-Multithreading-main/jntm.mp4");
-    cv::VideoCapture cap(video_name);
-    //cv::VideoCapture cap("/home/orangepi/rknn-cpp-Multithreading-main/");
-    if (!cap.isOpened())
-    {
-        printf("Error opening video capture\n");
-        return -1;
-    }
-
+    
+    
     cv::Mat img;
     while (true)
     {
@@ -321,7 +333,7 @@ int main(int argc, char **argv)
         
         // Show image
         cv::cvtColor(img, img, cv::COLOR_RGB2BGR);
-        // cv::imshow("Detection", img);
+        cv::imshow("Detection", img);
 
         // Release RKNN outputs
         rknn_outputs_release(ctx, io_num.n_output, outputs);
