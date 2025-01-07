@@ -9,7 +9,11 @@
 # 使用说明
 ### 演示
   * 系统需安装有**OpenCV** **CMake** **GCC，G++**
-  * 下载Releases中的测试视频于项目根目录,运行build-linux_RK3568.sh
+  * 下载Releases中的测试视频于项目根目录,运行编译
+  ```
+  bash build-linux_RK3568.sh
+  ```
+  
   * 编译完成后进入install运行命令./rknn_yolov5_demo **模型所在路径** **视频所在路径/摄像头序号**
   ```
   ./rknn_yolov5_demo ./model/yolov5s3568_80.rknn ./bus.jpg
