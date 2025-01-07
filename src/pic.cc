@@ -317,11 +317,11 @@ int main(int argc, char **argv)
 
         std::string outputPath = "detected.jpg"; // 设置保存路径和文件名
         if (cv::imwrite(outputPath, img)) {
-            std::cout << "图片保存成功：" << outputPath << std::endl;
+            std::cout << "save successed" << outputPath << std::endl;
         } else {
-            std::cerr << "图片保存失败！" << std::endl;
+            std::cerr << "save failed" << std::endl;
         }
-        //cv::imshow("Detection", img);
+        cv::imshow("Detection", img);
 
         // Release RKNN outputs
         rknn_outputs_release(ctx, io_num.n_output, outputs);

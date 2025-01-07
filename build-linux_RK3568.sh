@@ -1,6 +1,6 @@
 set -e
 
-# TARGET_SOC="rk3588"
+# TARGET_SOC="rk3568/rk3588"
 GCC_COMPILER=aarch64-linux-gnu
 
 export LD_LIBRARY_PATH=${TOOL_CHAIN}/lib64:$LD_LIBRARY_PATH
