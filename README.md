@@ -1,6 +1,7 @@
 # 简介
-* 此仓库为c++实现, 大体改自[rknpu2](https://github.com/rockchip-linux/rknpu2), python快速部署见于[rknn-multi-threaded](https://github.com/leafqycc/rknn-multi-threaded)，本模型不采用python。
+* 此仓库为c++实现, 大体改自[rknpu2](https://github.com/rockchip-linux/rknpu2),本模型不采用python。
 * 使用官方rknn模型, 单线程推理帧数大约20fps。
+* 使用使用正点原子的CB1和香橙派5板子测试。
 
 # 更新说明
 * 将RK3568与RK3588都可以使用.
