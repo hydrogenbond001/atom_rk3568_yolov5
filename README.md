@@ -22,7 +22,7 @@
   ./rknn_yolov5_demo ./model/yolov5s3568_80.rknn ./*.mp4
   ```
 
-# 多线程模型帧率测试
+# 帧率测试
 * 使用performance.sh进行CPU/NPU定频尽量减少误差
 * 测试模型来源: 自己转化
 * [yolov5s-relu](https://github.com/rockchip-linux/rknpu2/blob/master/examples/rknn_yolov5_demo/model/RK3566_RK3568/yolov5s-640-640.rknn)
