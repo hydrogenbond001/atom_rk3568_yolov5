@@ -1,0 +1,7 @@
+/home/ph/app_project_test/atom_rk3568_yolov5/build/build_cross_aarch64/CMakeFiles/install/strip.dir
+/home/ph/app_project_test/atom_rk3568_yolov5/build/build_cross_aarch64/CMakeFiles/install/local.dir
+/home/ph/app_project_test/atom_rk3568_yolov5/build/build_cross_aarch64/CMakeFiles/install.dir
+/home/ph/app_project_test/atom_rk3568_yolov5/build/build_cross_aarch64/CMakeFiles/list_install_components.dir
+/home/ph/app_project_test/atom_rk3568_yolov5/build/build_cross_aarch64/CMakeFiles/rebuild_cache.dir
+/home/ph/app_project_test/atom_rk3568_yolov5/build/build_cross_aarch64/CMakeFiles/edit_cache.dir
+/home/ph/app_project_test/atom_rk3568_yolov5/build/build_cross_aarch64/CMakeFiles/rknn_yolov5_demo.dir
