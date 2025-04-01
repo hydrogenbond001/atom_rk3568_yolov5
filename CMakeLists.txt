@@ -6,9 +6,16 @@ project(rknn_yolov5_demo)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-pthread")
+# set(CMAKE_CXX_FLAGS "-pthread")
+
+if(CMAKE_TOOLCHAIN_FILE)
+    message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+else()
+    message(STATUS "本地编译")
+endif()
 
 # skip 3rd-party lib dependencies
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--allow-shlib-undefined")
 
 # install target and libraries
@@ -32,10 +39,8 @@ include_directories(${RKNN_API_PATH}/include)
 include_directories(${CMAKE_SOURCE_DIR}/include/3rdparty)
 include_directories(${RGA_PATH}/include)
 
-# opencv
-find_package(OpenCV REQUIRED)
 
-set(CMAKE_INSTALL_RPATH "lib")
+
 
 #WiringPi
 #find_library(WIRINGPI_LIB wiringPi)
