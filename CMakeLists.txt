@@ -53,8 +53,8 @@ include_directories( ${CMAKE_SOURCE_DIR}/include)
 
 add_executable(rknn_yolov5_demo
 		#src/new.cc
-		src/video.cc     #detect video
-		#src/pic.cc        #detect picture
+		# src/video.cc     #detect video
+		src/pic.cc        #detect picture
     src/postprocess.cc
     src/preprocess.cc
     #src/rkYolov5s.cc
@@ -73,4 +73,11 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install/rknn_yolov5_demo_${CMAKE_SY
 install(TARGETS rknn_yolov5_demo DESTINATION ./)
 install(PROGRAMS ${RKNN_RT_LIB} DESTINATION lib)
 install(PROGRAMS ${RGA_LIB} DESTINATION lib)
+install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_core.so.410" DESTINATION lib)
+install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_highgui.so.410" DESTINATION lib)
+install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_imgproc.so.410" DESTINATION lib)
+install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_imgcodecs.so.410" DESTINATION lib)
+install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_videoio.so.410" DESTINATION lib)
 install(DIRECTORY model DESTINATION ./)
+install(FILES  "scripts/run_test.sh" DESTINATION ./)
+install(FILES  "jntm.mp4" DESTINATION ./)

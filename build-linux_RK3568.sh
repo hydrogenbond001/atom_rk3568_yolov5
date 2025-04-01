@@ -38,6 +38,7 @@ cd "$BUILD_DIR/$BUILD_SUBDIR"
 # 配置和编译
 cmake $TARGET_OPTIONS "$BASE_DIR"
 make -j4
+make install
 
 echo "编译完成，输出位于 $BUILD_DIR/$BUILD_SUBDIR"
 
