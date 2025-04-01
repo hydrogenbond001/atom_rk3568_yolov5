@@ -321,7 +321,7 @@ int main(int argc, char **argv)
         } else {
             std::cerr << "save failed" << std::endl;
         }
-        cv::imshow("Detection", img);
+        // cv::imshow("Detection", img);
 
         // Release RKNN outputs
         rknn_outputs_release(ctx, io_num.n_output, outputs);
