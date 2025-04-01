@@ -12,6 +12,7 @@ if(CMAKE_TOOLCHAIN_FILE)
     message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
 else()
     message(STATUS "本地编译")
+    find_package(OpenCV REQUIRED)
 endif()
 
 # skip 3rd-party lib dependencies
