@@ -1,5 +1,6 @@
 # /toolchains/aarch64_so
 /build/
+/install/
 # Prerequisites
 *.d
 
