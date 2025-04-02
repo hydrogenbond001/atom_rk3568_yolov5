@@ -9,7 +9,7 @@ set(CMAKE_C_COMPILER /usr/bin/aarch64-linux-gnu-gcc)
 set(CMAKE_CXX_COMPILER /usr/bin/aarch64-linux-gnu-g++)
 
 # # 设置 OpenCV 的根目录
-set(OpenCV_DIR ${CMAKE_SOURCE_DIR}/toolchains/aarch64/lib/cmake/opencv4)
+set(OpenCV_DIR ${CMAKE_SOURCE_DIR}/toolchains/install/lib/cmake/opencv4)
 find_package(OpenCV REQUIRED)
 
 
