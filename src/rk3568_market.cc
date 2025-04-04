@@ -65,17 +65,19 @@ int serialPuts(int fd, const char *buffer)
   return ret;
 }
 // 发送整数的函数
-void serialPutNumber(const int fd, int num) {
-   char buffer[32];  // 定义足够大的缓冲区来存储数字字符串
-   snprintf(buffer, sizeof(buffer), "%d", num);  // 将整数转换为字符串
-   serialPuts(fd, buffer);  // 通过 serialPuts 发送字符串
+void serialPutNumber(const int fd, int num)
+{
+  char buffer[32];                             // 定义足够大的缓冲区来存储数字字符串
+  snprintf(buffer, sizeof(buffer), "%d", num); // 将整数转换为字符串
+  serialPuts(fd, buffer);                      // 通过 serialPuts 发送字符串
 }
 
 // 发送浮点数的函数
-void serialPutFloat(const int fd, float num) {
-   char buffer[32];  // 定义缓冲区来存储浮点数字符串
-   snprintf(buffer, sizeof(buffer), "%.2f", num);  // 将浮点数转换为字符串，保留两位小数
-   serialPuts(fd, buffer);  // 通过 serialPuts 发送字符串
+void serialPutFloat(const int fd, float num)
+{
+  char buffer[32];                               // 定义缓冲区来存储浮点数字符串
+  snprintf(buffer, sizeof(buffer), "%.2f", num); // 将浮点数转换为字符串，保留两位小数
+  serialPuts(fd, buffer);                        // 通过 serialPuts 发送字符串
 }
 
 // Function prototypes
@@ -329,17 +331,29 @@ int main(int argc, char **argv)
       int y1 = det_result->box.top;
       int x2 = det_result->box.right;
       int y2 = det_result->box.bottom;
-      x = (x1 + x2) / 2;
+      x = (x1 + x2) / 2; // 中心点坐标
       y = (y1 + y2) / 2;
       cv::rectangle(img, cv::Point(x1, y1), cv::Point(x2, y2), cv::Scalar(0, 0, 255), 3);
       cv::putText(img, text, cv::Point(x1, y1 + 12), cv::FONT_HERSHEY_SIMPLEX, 0.4, cv::Scalar(255, 255, 255));
+      printf("Detected %s: %.1f%%\n", det_result->name, det_result->prop * 100);
+      printf("x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
+      // 发送数据到串口
+      // 发送检测到的物体名称和置信度
+      char buffer[128];
+
+      // 组合字符串并发送
+      snprintf(buffer, sizeof(buffer), "Detected %s: %.1f%%\n", det_result->name, det_result->prop * 100);
+      serialPuts(serial_fd, buffer);
+
+      snprintf(buffer, sizeof(buffer), "x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
+      serialPuts(serial_fd, buffer);
     }
     // show position
 
-    serialPutNumber(serial_fd, x);
-    serialPuts(serial_fd, "    ");
-    serialPutNumber(serial_fd, y);
-    serialPuts(serial_fd, "\r\n");
+    // serialPutNumber(serial_fd, x);
+    // serialPuts(serial_fd, "    ");
+    // serialPutNumber(serial_fd, y);
+    // serialPuts(serial_fd, "\r\n");
 
     // Show image
     cv::cvtColor(img, img, cv::COLOR_RGB2BGR);
