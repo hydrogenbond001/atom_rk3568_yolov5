@@ -1,6 +1,8 @@
 # /toolchains/aarch64_so
 /build/
 /install/
+/rknn_convery/data/
+/rknn_convery/models/
 # Prerequisites
 *.d
 
