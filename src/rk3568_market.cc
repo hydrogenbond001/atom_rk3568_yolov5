@@ -315,7 +315,7 @@ int main(int argc, char **argv)
     ret = rknn_run(ctx, NULL);
     ret = rknn_outputs_get(ctx, io_num.n_output, outputs, NULL);
     gettimeofday(&stop_time, NULL);
-    printf("Inference time: %f ms\n", (__get_us(stop_time) - __get_us(start_time)) / 1000);
+    printf("Inference time: %f ms\n\n", (__get_us(stop_time) - __get_us(start_time)) / 1000);
 
     // Post-process
     detect_result_group_t detect_result_group;
@@ -343,18 +343,26 @@ int main(int argc, char **argv)
       y = (y1 + y2) / 2;
       cv::rectangle(img, cv::Point(x1, y1), cv::Point(x2, y2), cv::Scalar(0, 0, 255), 3);
       cv::putText(img, text, cv::Point(x1, y1 + 12), cv::FONT_HERSHEY_SIMPLEX, 0.4, cv::Scalar(255, 255, 255));
+      cv::line(img, cv::Point(400, 0), cv::Point(400, height), cv::Scalar(0, 0, 255), 2); // 画第二条竖线 (x=600，蓝色，线宽 2)
+      cv::line(img, cv::Point(600, 0), cv::Point(600, height), cv::Scalar(255, 0, 0), 2);
       printf("Detected %s: %.1f%%\n", det_result->name, det_result->prop * 100);
-      printf("x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
+      // printf("x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
+      printf("x: %d, y: %d,\n", x, y);
       // 发送数据到串口
+      if ((x > 400) && (x < 600))
+      {
+        write(serial_fd, &(det_result->name), 1);
+      }
+
       // 发送检测到的物体名称和置信度
-      char buffer[128];
+      // char buffer[128];
 
       // 组合字符串并发送
-      snprintf(buffer, sizeof(buffer), "Detected %s: %.1f%%\n", det_result->name, det_result->prop * 100);
-      serialPuts(serial_fd, buffer);
+      // snprintf(buffer, sizeof(buffer), "Detected %s: %.1f%%\n", det_result->name, det_result->prop * 100);
+      // serialPuts(serial_fd, buffer);
 
-      snprintf(buffer, sizeof(buffer), "x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
-      serialPuts(serial_fd, buffer);
+      // snprintf(buffer, sizeof(buffer), "x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
+      // serialPuts(serial_fd, buffer);
     }
     // show position
 
@@ -365,7 +373,7 @@ int main(int argc, char **argv)
 
     // Show image
     cv::cvtColor(img, img, cv::COLOR_RGB2BGR);
-    // cv::imshow("Detection", img);
+    cv::imshow("Detection", img);
     writer.write(img); // 保存当前帧
 
     // Release RKNN outputs

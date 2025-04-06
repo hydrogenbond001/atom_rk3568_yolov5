@@ -36,7 +36,7 @@ mkdir -p "$BUILD_DIR/$BUILD_SUBDIR"
 cd "$BUILD_DIR/$BUILD_SUBDIR"
 
 # 配置和编译
-cmake $TARGET_OPTIONS "$BASE_DIR"
+cmake $TARGET_OPTIONS "$BASE_DIR" -Wno-dev
 make -j4
 make install
 
