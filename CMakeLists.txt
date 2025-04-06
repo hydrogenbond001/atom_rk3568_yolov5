@@ -1,4 +1,5 @@
 #add_definitions("-Wall -g")
+# cmake_policy(SET CMP0177 NEW)
 
 cmake_minimum_required(VERSION 3.4.1)
 
