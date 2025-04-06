@@ -80,4 +80,4 @@ install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_imgcodecs.so.410" DESTINAT
 install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_videoio.so.410" DESTINATION lib)
 install(DIRECTORY model DESTINATION ./)
 install(FILES  "scripts/run_test.sh" DESTINATION ./)
-install(FILES  "jntm.mp4" DESTINATION ./)
+install(FILES  "market1.mp4" DESTINATION ./)

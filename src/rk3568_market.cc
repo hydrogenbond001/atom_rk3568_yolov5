@@ -192,6 +192,7 @@ int main(int argc, char **argv)
   // char *video_name = (char *)argv[2];//std::stoi(argv[1]);
   std::string input = argv[2]; // 获取输入参数
   cv::VideoCapture cap;
+  cv::VideoWriter writer;
 
   // 判断输入参数是否为数字（摄像头编号）还是文件路径
   try
@@ -202,6 +203,13 @@ int main(int argc, char **argv)
   catch (...)
   {
     cap.open(input); // 如果解析失败，假定输入为视频文件路径
+  }
+
+  writer.open("output.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 30, cv::Size(1280, 720));
+  if (!writer.isOpened())
+  {
+    std::cerr << "无法打开输出视频文件写入" << std::endl;
+    return -1;
   }
 
   printf("Loading model...\n");
@@ -357,7 +365,8 @@ int main(int argc, char **argv)
 
     // Show image
     cv::cvtColor(img, img, cv::COLOR_RGB2BGR);
-    cv::imshow("Detection", img);
+    // cv::imshow("Detection", img);
+    writer.write(img); // 保存当前帧
 
     // Release RKNN outputs
     rknn_outputs_release(ctx, io_num.n_output, outputs);
@@ -372,6 +381,7 @@ int main(int argc, char **argv)
 
   // Cleanup
   cap.release();
+  writer.release();
   rknn_destroy(ctx);
   cv::destroyAllWindows();
   free(model_data);

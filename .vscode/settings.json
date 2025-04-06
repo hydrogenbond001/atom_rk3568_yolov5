@@ -3,6 +3,7 @@
         "*.txt": "pip-requirements",
         "*.cmake": "pip-requirements",
         "typeindex": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "memory": "cpp"
     }
 }
