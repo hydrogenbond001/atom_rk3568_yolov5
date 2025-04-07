@@ -353,23 +353,10 @@ int main(int argc, char **argv)
       // printf("x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
       printf("x: %d, y: %d,\n", x, y);
 
-      int bytes_read = read(serial_fd, &serial_fd_received, 1);
-      if (bytes_read > 0)
-      {                                // 成功接收到数据
-        if (serial_fd_received == 'G') // 收到关时start_enable_flag置0
-        {
-          start_enable_flag = 0;
-        }
-        if (serial_fd_received == 'K') // 收到开时start_enable_flag置1
-        {
-          start_enable_flag = 1;
-        }
-      }
-
       // 发送数据到串口
-      if (start_enable_flag = 1)//收到K开启命令时才使能输出
+      if (start_enable_flag == 1) // 收到K开启命令时才使能输出
       {
-        if ((x > 400) && (x < 600))//当物体中心在两条线之中
+        if ((x > 400) && (x < 600)) // 当物体中心在两条线之中
         {
           write(serial_fd, &(det_result->name), 1);
         }
@@ -390,10 +377,27 @@ int main(int argc, char **argv)
     // serialPuts(serial_fd, "    ");
     // serialPutNumber(serial_fd, y);
     // serialPuts(serial_fd, "\r\n");
-
+    int bytes_read = read(serial_fd, &serial_fd_received, 1);//开关
+    if (bytes_read > 0)
+    {                                // 成功接收到数据
+      if (serial_fd_received == 'G') // 收到关时start_enable_flag置0
+      {
+        start_enable_flag = 0;
+        // printf("start_enable_flag = 0 \r\n");
+        write(serial_fd, "start_enable_flag = 0", strlen("start_enable_flag = 0"));
+        serial_fd_received = '0'; // 归位
+      }
+      if (serial_fd_received == 'K') // 收到开时start_enable_flag置1
+      {
+        start_enable_flag = 1;
+        // printf("start_enable_flag = 1 \r\n");
+        write(serial_fd, "start_enable_flag = 1", strlen("start_enable_flag = 1"));
+        serial_fd_received = '0'; // 归位
+      }
+    }
     // Show image
     cv::cvtColor(img, img, cv::COLOR_RGB2BGR);
-    cv::imshow("Detection", img);
+    // cv::imshow("Detection", img);
     writer.write(img); // 保存当前帧
 
     // Release RKNN outputs
