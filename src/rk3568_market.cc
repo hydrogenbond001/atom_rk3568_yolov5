@@ -349,9 +349,9 @@ int main(int argc, char **argv)
       cv::putText(img, text, cv::Point(x1, y1 + 12), cv::FONT_HERSHEY_SIMPLEX, 0.4, cv::Scalar(255, 255, 255));
       cv::line(img, cv::Point(400, 0), cv::Point(400, height), cv::Scalar(0, 0, 255), 2); // 画第二条竖线 (x=600，蓝色，线宽 2)
       cv::line(img, cv::Point(600, 0), cv::Point(600, height), cv::Scalar(255, 0, 0), 2);
-      printf("Detected %s: %.1f%%\n", det_result->name, det_result->prop * 100);
+      // printf("Detected %s: %.1f%%\n", det_result->name, det_result->prop * 100);
       // printf("x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
-      printf("x: %d, y: %d,\n", x, y);
+      // printf("x: %d, y: %d,\n", x, y);
 
       // 发送数据到串口
       if (start_enable_flag == 1) // 收到K开启命令时才使能输出
@@ -359,6 +359,10 @@ int main(int argc, char **argv)
         if ((x > 400) && (x < 600)) // 当物体中心在两条线之中
         {
           write(serial_fd, &(det_result->name), 1);
+          // write(serial_fd, "\n", 1);
+          printf("Detected %s: %.1f%%\n", det_result->name, det_result->prop * 100);
+          // printf("x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
+          printf("x: %d, y: %d,\n", x, y);
         }
       }
       // 发送检测到的物体名称和置信度
@@ -371,27 +375,22 @@ int main(int argc, char **argv)
       // snprintf(buffer, sizeof(buffer), "x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
       // serialPuts(serial_fd, buffer);
     }
-    // show position
 
-    // serialPutNumber(serial_fd, x);
-    // serialPuts(serial_fd, "    ");
-    // serialPutNumber(serial_fd, y);
-    // serialPuts(serial_fd, "\r\n");
-    int bytes_read = read(serial_fd, &serial_fd_received, 1);//开关
+    int bytes_read = read(serial_fd, &serial_fd_received, 1); // 开关
     if (bytes_read > 0)
     {                                // 成功接收到数据
       if (serial_fd_received == 'G') // 收到关时start_enable_flag置0
       {
         start_enable_flag = 0;
-        // printf("start_enable_flag = 0 \r\n");
-        write(serial_fd, "start_enable_flag = 0", strlen("start_enable_flag = 0"));
+        printf("start_enable_flag = 0 \r\n");
+        // write(serial_fd, "start_enable_flag = 0", strlen("start_enable_flag = 0"));//调试用
         serial_fd_received = '0'; // 归位
       }
       if (serial_fd_received == 'K') // 收到开时start_enable_flag置1
       {
         start_enable_flag = 1;
-        // printf("start_enable_flag = 1 \r\n");
-        write(serial_fd, "start_enable_flag = 1", strlen("start_enable_flag = 1"));
+        printf("start_enable_flag = 1 \r\n");
+        // write(serial_fd, "start_enable_flag = 1", strlen("start_enable_flag = 1"));
         serial_fd_received = '0'; // 归位
       }
     }
