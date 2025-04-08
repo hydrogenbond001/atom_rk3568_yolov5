@@ -1,12 +1,22 @@
-baishi
-coco
-cp_ml
-cp_nm
-cp_peach
-cp_yz
-dp
-redbull
-rio-peach
-rio_gp
-rio_sb
-yingyang
+baishi_black', 
+'baishi_blue', 
+'coco', 
+'cp_ml',
+ 'cp_nm', 
+ 'cp_peach', 
+ 'cp_yz', 
+ 'dp_bottle',
+  'dp_can
+  'redbull_bottle
+  'redbull_can
+  'rio_gp
+   'rio_lizhi
+    'rio_orange
+    , 'rio_peach
+     'rio_sb'
+      'wanglaoji
+wangzai'
+yingyang_apple', 
+yingyang_purple',
+yingyang_white', 
+yingyang_zao

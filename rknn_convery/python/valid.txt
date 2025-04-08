@@ -65,4 +65,4 @@
 /home/ph/app_project_test/atom_rk3568_yolov5/rknn_convery/data/supermarketV2.v2i.yolov5pytorch/valid/images/frame_00540_jpg.rf.c05f99cce144a11af10321f19d22c26d.jpg
 /home/ph/app_project_test/atom_rk3568_yolov5/rknn_convery/data/supermarketV2.v2i.yolov5pytorch/valid/images/frame_00500_jpg.rf.0250579fc28a62ea4d682c8d6b718dc1.jpg
 /home/ph/app_project_test/atom_rk3568_yolov5/rknn_convery/data/supermarketV2.v2i.yolov5pytorch/valid/images/frame_00680_jpg.rf.8787c34bb7505374200ba6023c5ef39e.jpg
-/home/ph/app_project_test/atom_rk3568_yolov5/rknn_convery/data/supermarketV2.v2i.yolov5pytorch/valid/images/frame_00750_jpg.rf.de6fd8f10485880f33b326f65e833000.jpg
+/home/ph/app_project_test/atom_rk3568_yolov5/charknn_convery/data/supermarketV2.v2i.yolov5pytorch/valid/images/frame_00750_jpg.rf.de6fd8f10485880f33b326f65e833000.jpg
