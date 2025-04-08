@@ -2,19 +2,19 @@ baishi_black',
 'baishi_blue', 
 'coco', 
 'cp_ml',
- 'cp_nm', 
+ 'cp_nm', e
  'cp_peach', 
  'cp_yz', 
- 'dp_bottle',
-  'dp_can
+ 'dp_bottle', h
+  'dp_can i
   'redbull_bottle
   'redbull_can
   'rio_gp
    'rio_lizhi
-    'rio_orange
-    , 'rio_peach
-     'rio_sb'
-      'wanglaoji
+rio_orange
+rio_peach o
+rio_sb'p
+wanglaoj i
 wangzai'
 yingyang_apple', 
 yingyang_purple',
