@@ -3,6 +3,9 @@
 /install/
 /rknn_convery/data/
 /rknn_convery/models/
+/rknn_convery/python/check0_base_optimize.onnx
+/rknn_convery/python/check2_correct_ops.onnx
+
 # Prerequisites
 *.d
 

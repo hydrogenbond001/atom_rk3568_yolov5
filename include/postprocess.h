@@ -8,7 +8,7 @@
 #define OBJ_NUMB_MAX_SIZE 64
 #define OBJ_CLASS_NUM 22 //names: ['baishi', 'coco', 'cp_ml', 'cp_nm', 'cp_peach', 'cp_yz', 'dp', 'redbull', 'rio-peach', 'rio_gp', 'rio_sb', 'yingyang']
 #define NMS_THRESH 0.25
-#define BOX_THRESH 0.6
+#define BOX_THRESH 0.8
 #define PROP_BOX_SIZE (5 + OBJ_CLASS_NUM)
 
 typedef struct _BOX_RECT
