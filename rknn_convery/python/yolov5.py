@@ -7,14 +7,14 @@ import argparse
 realpath = os.path.abspath(__file__)
 _sep = os.path.sep
 realpath = realpath.split(_sep)
-sys.path.append(os.path.join(realpath[0]+_sep, *realpath[1:realpath.index('rknn_model_zoo')+1]))
+sys.path.append(os.path.join(realpath[0]+_sep, *realpath[1:realpath.index('atom_rk3568_yolov5')+1]))
 
 from py_utils.coco_utils import COCO_test_helper
 import numpy as np
 
 
 OBJ_THRESH = 0.25
-NMS_THRESH = 0.45
+NMS_THRESH = 0.5
 
 # The follew two param is for map test
 # OBJ_THRESH = 0.001
@@ -22,13 +22,14 @@ NMS_THRESH = 0.45
 
 IMG_SIZE = (640, 640)  # (width, height), such as (1280, 736)
 
-CLASSES = ("person", "bicycle", "car","motorbike ","aeroplane ","bus ","train","truck ","boat","traffic light",
-           "fire hydrant","stop sign ","parking meter","bench","bird","cat","dog ","horse ","sheep","cow","elephant",
-           "bear","zebra ","giraffe","backpack","umbrella","handbag","tie","suitcase","frisbee","skis","snowboard","sports ball","kite",
-           "baseball bat","baseball glove","skateboard","surfboard","tennis racket","bottle","wine glass","cup","fork","knife ",
-           "spoon","bowl","banana","apple","sandwich","orange","broccoli","carrot","hot dog","pizza ","donut","cake","chair","sofa",
-           "pottedplant","bed","diningtable","toilet ","tvmonitor","laptop	","mouse	","remote ","keyboard ","cell phone","microwave ",
-           "oven ","toaster","sink","refrigerator ","book","clock","vase","scissors ","teddy bear ","hair drier", "toothbrush ")
+# CLASSES = ("person", "bicycle", "car","motorbike ","aeroplane ","bus ","train","truck ","boat","traffic light",
+#            "fire hydrant","stop sign ","parking meter","bench","bird","cat","dog ","horse ","sheep","cow","elephant",
+#            "bear","zebra ","giraffe","backpack","umbrella","handbag","tie","suitcase","frisbee","skis","snowboard","sports ball","kite",
+#            "baseball bat","baseball glove","skateboard","surfboard","tennis racket","bottle","wine glass","cup","fork","knife ",
+#            "spoon","bowl","banana","apple","sandwich","orange","broccoli","carrot","hot dog","pizza ","donut","cake","chair","sofa",
+#            "pottedplant","bed","diningtable","toilet ","tvmonitor","laptop	","mouse	","remote ","keyboard ","cell phone","microwave ",
+#            "oven ","toaster","sink","refrigerator ","book","clock","vase","scissors ","teddy bear ","hair drier", "toothbrush ")
+CLASSES = ('baishi_black', 'baishi_blue', 'coco', 'cp_ml', 'cp_nm', 'cp_peach', 'cp_yz', 'dp_bottle', 'dp_can', 'redbull_bottle', 'redbull_can', 'rio_gp', 'rio_lizhi', 'rio_orange', 'rio_peach', 'rio_sb', 'wanglaoji', 'wangzai', 'yingyang_apple', 'yingyang_purple', 'yingyang_white', 'yingyang_zao')
 
 coco_id_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 31, 32, 33, 34,
          35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63,
@@ -200,8 +201,8 @@ def img_check(path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process some integers.')
     # basic params
-    parser.add_argument('--model_path', type=str, required= True, help='model path, could be .pt or .rknn file')
-    parser.add_argument('--target', type=str, default='rk3566', help='target RKNPU platform')
+    parser.add_argument('--model_path', type=str, default='../model/best.onnx', required= False, help='model path, could be .pt or .rknn file')
+    parser.add_argument('--target', type=str, default='rk3568', help='target RKNPU platform')
     parser.add_argument('--device_id', type=str, default=None, help='device id')
     
     parser.add_argument('--img_show', action='store_true', default=False, help='draw the result and show')
@@ -210,7 +211,7 @@ if __name__ == '__main__':
     # data params
     parser.add_argument('--anno_json', type=str, default='../../../datasets/COCO/annotations/instances_val2017.json', help='coco annotation path')
     # coco val folder: '../../../datasets/COCO//val2017'
-    parser.add_argument('--img_folder', type=str, default='../model', help='img folder path')
+    parser.add_argument('--img_folder', type=str, default='../../model', help='img folder path')
     parser.add_argument('--coco_map_test', action='store_true', help='enable coco map test')
     parser.add_argument('--anchors', type=str, default='../model/anchors_yolov5.txt', help='target to anchor file, only yolov5, yolov7 need this param')
 
