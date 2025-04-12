@@ -2,8 +2,8 @@ import sys
 
 from rknn.api import RKNN
 
-DATASET_PATH = 'valid.txt'
-DEFAULT_RKNN_PATH = '../models/exp27/weights/best.rknn'
+DATASET_PATH = '../model/dataset.txt'
+DEFAULT_RKNN_PATH = './best.rknn'
 DEFAULT_QUANT = True
 
 def parse_arg():
@@ -16,8 +16,8 @@ def parse_arg():
 
     # model_path = sys.argv[1]
     # platform = sys.argv[2]
-    model_path = "../models/exp27/weights/best.onnx"
-    platform = "rk3568"
+    model_path = "./best.onnx"
+    platform = "rv1106"
 
     do_quant = DEFAULT_QUANT
     if len(sys.argv) > 3:
