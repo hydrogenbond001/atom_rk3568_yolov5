@@ -8,15 +8,15 @@ import cv2
 from rknn.api import RKNN
 
 # Model from https://github.com/airockchip/rknn_model_zoo
-ONNX_MODEL = 'best.onnx'
+ONNX_MODEL = '../models/exp43/weights/best.onnx'
 RKNN_MODEL = 'best.rknn'
-IMG_PATH = './win2.jpg'
+IMG_PATH = './win1.jpg'
 DATASET = '../model/dataset.txt'
 
 QUANTIZE_ON = True
 
 OBJ_THRESH = 0.25
-NMS_THRESH = 0.45
+NMS_THRESH = 0.5
 IMG_SIZE = 640
 
 # CLASSES = ("person", "bicycle", "car", "motorbike ", "aeroplane ", "bus ", "train", "truck ", "boat", "traffic light",
@@ -26,7 +26,8 @@ IMG_SIZE = 640
 #            "spoon", "bowl", "banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza ", "donut", "cake", "chair", "sofa",
 #            "pottedplant", "bed", "diningtable", "toilet ", "tvmonitor", "laptop	", "mouse	", "remote ", "keyboard ", "cell phone", "microwave ",
 #            "oven ", "toaster", "sink", "refrigerator ", "book", "clock", "vase", "scissors ", "teddy bear ", "hair drier", "toothbrush ")
-CLASSES = ('baishi_black', 'baishi_blue', 'coco', 'cp_ml', 'cp_nm', 'cp_peach', 'cp_yz', 'dp_bottle', 'dp_can', 'redbull_bottle', 'redbull_can', 'rio_gp', 'rio_lizhi', 'rio_orange', 'rio_peach', 'rio_sb', 'wanglaoji', 'wangzai', 'yingyang_apple', 'yingyang_purple', 'yingyang_white', 'yingyang_zao')
+CLASSES = ('baishi_black', 'baishi_blue', 'coco', 'cp_ml', 'cp_nm', 'cp_peach', 'cp_yz', 'dp_bottle', 'dp_can', 'redbull_bottle', 'redbull_can', 
+           'rio_gp', 'rio_lizhi', 'rio_orange', 'rio_peach', 'rio_sb', 'wanglaoji', 'wangzai', 'yingyang_apple', 'yingyang_purple', 'yingyang_white', 'yingyang_zao')
 
 
 

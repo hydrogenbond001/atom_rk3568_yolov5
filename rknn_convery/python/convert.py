@@ -16,19 +16,19 @@ def parse_arg():
 
     # model_path = sys.argv[1]
     # platform = sys.argv[2]
-    model_path = "./best.onnx"
+    model_path = '../models/exp43/weights/best.onnx'
     platform = "rv1106"
-
+    model_type = "i8"
     do_quant = DEFAULT_QUANT
-    if len(sys.argv) > 3:
-        model_type = sys.argv[3]
-        if model_type not in ['i8', 'u8', 'fp']:
-            print("ERROR: Invalid model type: {}".format(model_type))
-            exit(1)
-        elif model_type in ['i8', 'u8']:
-            do_quant = True
-        else:
-            do_quant = False
+    # if len(sys.argv) > 3:
+    #     model_type = sys.argv[3]
+    #     if model_type not in ['i8', 'u8', 'fp']:
+    #         print("ERROR: Invalid model type: {}".format(model_type))
+    #         exit(1)
+    #     elif model_type in ['i8', 'u8']:
+    #         do_quant = True
+    #     else:
+    #         do_quant = False
 
     if len(sys.argv) > 4:
         output_path = sys.argv[4]

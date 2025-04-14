@@ -9,16 +9,31 @@
 
 
 # 使用说明
-### 环境依赖
-  * sudo apt install g++-aarch64-linux-gnu
-  * sudo apt install gcc-aarch64-linux-gnu
 ### 演示
+  板端编译部署
   * 系统需安装有**OpenCV** **CMake** **GCC，G++**
-  * 下载Releases中的测试视频于项目根目录,运行编译，
+  * 下载Releases中的测试视频或者自己准备视频图片,运行编译，
   ```
   bash build-linux_RK3568.sh
   ```
-  
+  交叉编译部署
+  * arm的gcc编译器
+  ```
+  sudo apt install gcc-aarch64-linux-gnu
+  ```
+
+  修改CmakeList里的add_executable
+  ```
+  add_executable(rknn_yolov5_demo
+		src/rk3568_market.cc//注释掉不用
+		# src/video.cc     #detect video //和下面选择一个取消注释
+		# src/pic.cc        #detect picture
+    src/postprocess.cc
+    src/preprocess.cc
+    #src/rkYolov5s.cc
+)
+  ```
+
   * 编译完成后进入install运行命令./rknn_yolov5_demo **模型所在路径** **图片，视频所在路径/摄像头序号**
   ```
   ./rknn_yolov5_demo ./model/yolov5s3568_80.rknn ./bus.jpg
