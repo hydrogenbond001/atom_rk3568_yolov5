@@ -2,9 +2,15 @@ import sys
 
 from rknn.api import RKNN
 
+<<<<<<< HEAD
 DATASET_PATH = '../model/dataset.txt'
 DEFAULT_RKNN_PATH = './best_3566.rknn'
 DEFAULT_QUANT = True
+=======
+DATASET_PATH = 'list.txt'
+DEFAULT_RKNN_PATH = 'conv.rknn'
+DEFAULT_QUANT = 0
+>>>>>>> a145e8c90da67610af9ace6ed675f4ba87189338
 
 def parse_arg():
     if len(sys.argv) < 3:
@@ -16,9 +22,15 @@ def parse_arg():
 
     # model_path = sys.argv[1]
     # platform = sys.argv[2]
+<<<<<<< HEAD
     model_path = '../models/exp43/weights/best.onnx'
     platform = "rk3566"
     model_type = "i8"
+=======
+    model_path = "../exp61/weights/best.onnx"
+    platform = "rk3568"
+
+>>>>>>> a145e8c90da67610af9ace6ed675f4ba87189338
     do_quant = DEFAULT_QUANT
     # if len(sys.argv) > 3:
     #     model_type = sys.argv[3]
