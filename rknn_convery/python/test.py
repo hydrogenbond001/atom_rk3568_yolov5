@@ -8,12 +8,12 @@ import cv2
 from rknn.api import RKNN
 
 # Model from https://github.com/airockchip/rknn_model_zoo
-ONNX_MODEL = '../models/exp43/weights/best.onnx'
+ONNX_MODEL = '../exp64/weights/best.onnx'
 RKNN_MODEL = 'best.rknn'
 IMG_PATH = './win1.jpg'
 DATASET = '../model/dataset.txt'
 
-QUANTIZE_ON = True
+QUANTIZE_ON = 1
 
 OBJ_THRESH = 0.25
 NMS_THRESH = 0.5
@@ -241,7 +241,7 @@ if __name__ == '__main__':
 
     # pre-process config
     print('--> Config model')
-    rknn.config(mean_values=[[0, 0, 0]], std_values=[[255, 255, 255]], target_platform='rv1106')
+    rknn.config(mean_values=[[0, 0, 0]], std_values=[[255, 255, 255]], target_platform='rk3568')
     print('done')
 
     # Load ONNX model

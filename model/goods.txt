@@ -2,17 +2,17 @@ baishi_black
 baishi_blue
 coco
 cp_ml
-cp_nm *             e
+cp_nm
 cp_peach
 cp_yz
-dp_bottle *         h
-dp_can *            i
+dp_bottle
+dp_can
 redbull_bottle
 redbull_can
 rio_gp
 rio_lizhi
 rio_orange
-rio_peach *         o
+rio_peach
 rio_sb
 wanglaoji
 wangzai
