@@ -8,15 +8,15 @@ import cv2
 from rknn.api import RKNN
 
 # Model from https://github.com/airockchip/rknn_model_zoo
-ONNX_MODEL = '../exp64/weights/best.onnx'
-RKNN_MODEL = '../exp64/weights/best.rknn'
+ONNX_MODEL = '../exp65/weights/best.onnx'
+RKNN_MODEL = '../exp65/weights/best.rknn'
 IMG_PATH = '../test_image'#input
 # IMG_PATH = '../images_market/38_jpg.rf.d423771c90ed08981f3b567e80c071e1.jpg'
 OUTPUT_FOLDER = '../output'
 # DATASET = '../model/dataset.txt'
 DATASET = 'list.txt'
 
-QUANTIZE_ON = 0
+QUANTIZE_ON = 1
 
 OBJ_THRESH = 0.25
 NMS_THRESH = 0.45
@@ -311,7 +311,9 @@ if __name__ == '__main__':
     #     cv2.imwrite('result.jpg', img_1)
     #     print('Save results to result.jpg!')
 
-
+    if not os.path.exists(OUTPUT_FOLDER):
+        os.makedirs(OUTPUT_FOLDER)
+        print(f"Created output folder: {OUTPUT_FOLDER}")
 
     # 遍历输入文件夹中的所有图片
     for filename in os.listdir(IMG_PATH):
