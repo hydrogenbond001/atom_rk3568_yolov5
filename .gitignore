@@ -7,7 +7,7 @@
 /rknn_convery/python/check2_correct_ops.onnx
 /rknn_convery/exp*
 *.rar
-
+/yolocam/
 # Prerequisites
 *.d
 
