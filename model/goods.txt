@@ -1,22 +1,27 @@
-baishi_black
-baishi_blue
-coco
-cp_ml
-cp_nm *             e
-cp_peach
-cp_yz
-dp_bottle *         h
-dp_can *            i
-redbull_bottle
-redbull_can
-rio_gp
-rio_lizhi
-rio_orange
-rio_peach *         o
-rio_sb
-wanglaoji
-wangzai
-yingyang_apple
-yingyang_purple
-yingyang_white
-yingyang_zao
+names = [
+    'JDB_can',        # a
+    'baishi_black',   # b
+    'baishi_blue',    # c
+    'cp_ml',          # d
+    'cp_nm',          # e
+    'cp_peach',       # f
+    'cp_yz',          # g
+    'dp_bottle',      # h
+    'dp_can',         # i
+    'kaishui',        # j
+    'redbull_bottle', # k
+    'redbull_can',    # l
+    'rio_gp',         # m
+    'rio_lizhi',      # n
+    'rio_orange',     # o
+    'rio_peach',      # p
+    'rio_sb',         # q
+    'rusuanjun',      # r
+    'wanglaoji',      # s
+    'wangzai',        # t
+    'yangledu',       # u
+    'yingyang_apple', # v
+    'yingyang_purple',# w
+    'yingyang_white', # x
+    'yingyang_zao'    # y
+]
