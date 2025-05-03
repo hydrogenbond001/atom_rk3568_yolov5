@@ -8,8 +8,8 @@ import cv2
 from rknn.api import RKNN
 
 # Model from https://github.com/airockchip/rknn_model_zoo
-ONNX_MODEL = '../exp66/weights/best.onnx'
-RKNN_MODEL = '../exp66/weights/best.rknn'
+ONNX_MODEL = '../exp71/weights/best.onnx'
+RKNN_MODEL = '../exp71/weights/best.rknn'
 IMG_PATH = '../test_image'#input
 # IMG_PATH = '../images_market/38_jpg.rf.d423771c90ed08981f3b567e80c071e1.jpg'
 OUTPUT_FOLDER = '../output'
