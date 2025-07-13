@@ -352,18 +352,26 @@ int main(int argc, char **argv)
       // printf("Detected %s: %.1f%%\n", det_result->name, det_result->prop * 100);
       // printf("x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
       // printf("x: %d, y: %d,\n", x, y);
-
       // 发送数据到串口
-      if (start_enable_flag == 1) // 收到K开启命令时才使能输出
+
+      if ((x > 600) && (x < 800)) // 当物体中心在两条线之中
       {
-        if ((x > 600) && (x < 900)) // 当物体中心在两条线之中
+        if (start_enable_flag == 1) // 收到K开启命令时才使能输出
         {
-          write(serial_fd, &(det_result->name), 1);
+          // write(serial_fd, &(det_result->name), 1);
           // write(serial_fd, "\n", 1);
-          printf("Detected %s: %.1f%%    ", det_result->name, det_result->prop * 100);
-          // printf("x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
-          printf("x: %d, y: %d,\n", x, y);
+          char send_char = det_result->name[0]; // 默认发送第一个字符   5月24日，比赛前改
+          // 如果检测到 C、D、E 或 F，则统一发送 'C'
+          // if (send_char == 'C' || send_char == 'D' || send_char == 'E' || send_char == 'F' || send_char == 'G' || send_char == 'H' || send_char == 'I' || send_char == 'J')
+          // {
+          //   send_char = 'C';
+            // printf("Detected has been change to %s: %.1f%%    ", send_char, det_result->prop * 100);
+          // }
+          write(serial_fd, &send_char, 1);
         }
+        printf("Detected has been change to %s: %.1f%%    ", det_result->name, det_result->prop * 100);
+        // printf("x1: %d, y1: %d, x2: %d, y2: %d\n", x1, y1, x2, y2);
+        printf("x: %d, y: %d,\n", x, y);
       }
       // 发送检测到的物体名称和置信度
       // char buffer[128];
@@ -377,10 +385,10 @@ int main(int argc, char **argv)
     }
 
     int bytes_read = read(serial_fd, &serial_fd_received, 1); // 开关
-    bytes_read = 1;                                           ////////////////////////////////////////////////////////////////////////
+    // bytes_read = 1;                  ////////////////////////////////////////////////////////////////////////
     if (bytes_read > 0)
     {
-      serial_fd_received = 'K';      //////////////////////////////////////////////////////////
+      // serial_fd_received = 'K';      //////////////////////////////////////////////////////////
       if (serial_fd_received == 'G') // 收到关时start_enable_flag置0
       {
         start_enable_flag = 0;
@@ -398,7 +406,7 @@ int main(int argc, char **argv)
     }
     // Show image
     cv::cvtColor(img, img, cv::COLOR_RGB2BGR);
-    cv::imshow("Detection", img);
+    // cv::imshow("Detection", img);
     writer.write(img); // 保存当前帧
 
     // Release RKNN outputs
