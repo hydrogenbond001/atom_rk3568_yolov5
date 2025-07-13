@@ -8,8 +8,8 @@ import cv2
 from rknn.api import RKNN
 
 # Model from https://github.com/airockchip/rknn_model_zoo
-ONNX_MODEL = '../exp71/weights/best.onnx'
-RKNN_MODEL = '../exp71/weights/best.rknn'
+ONNX_MODEL = '../exp72/weights/best.onnx'
+RKNN_MODEL = '../exp72/weights/best.rknn'
 IMG_PATH = '../test_image'#input
 # IMG_PATH = '../images_market/38_jpg.rf.d423771c90ed08981f3b567e80c071e1.jpg'
 OUTPUT_FOLDER = '../output'
@@ -238,7 +238,7 @@ if __name__ == '__main__':
 
     # pre-process config
     print('--> Config model')
-    rknn.config(mean_values=[[0, 0, 0]], std_values=[[255, 255, 255]], target_platform='rk3568')
+    rknn.config(mean_values=[[0, 0, 0]], std_values=[[255, 255, 255]], target_platform='rk3588')
     print('done')
 
     # Load ONNX model

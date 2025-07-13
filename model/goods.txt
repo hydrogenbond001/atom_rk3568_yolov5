@@ -25,3 +25,50 @@ names = [
     'yingyang_white', # x
     'yingyang_zao'    # y
 ]
+
+nc: 36
+names: [
+  'JDB_can',           # a
+  'baishi_black',      # b
+  'baishi_blue',       # c
+  'cp_ml',             # d
+  'cp_nm',             # e
+  'cp_peach',          # f
+  'cp_yz',             # g
+  'dp_bottle',         # h
+  'dp_can',            # i
+  'kaishui',           # j
+  'mozhao_blue',       # k
+  'mozhao_green',      # l
+  'mozhao_orange',     # m
+  'mozhao_pink',       # n
+  'mozhao_white',      # o
+  'redbull_bottle',    # p
+  'redbull_can',       # q
+  'rio_gp',            # r
+  'rio_lizhi',         # s
+  'rio_orange',        # t
+  'rio_peach',         # u
+  'rio_sb',            # v
+  'rusuanjun',         # w
+  'wanglaoji',         # x
+  'wangzai',           # y
+  'watson_black',      # z
+  'watson_yellow',     # A
+  'yangledu',          # B
+  'yingyang_apple',    # C
+  'yingyang_blue',     # D
+  'yingyang_boluo',    # E
+  'yingyang_peach',    # F
+  'yingyang_purple',   # G
+  'yingyang_sb',       # H
+  'yingyang_white',    # I
+  'yingyang_zao',      # J
+  'z_OP',              # K
+  'z_baishi_dragen',   # L
+  'z_ganlu_amall_right',# M
+  'z_ganlu_big_left',   # N
+  'z_nongfushanquan',   # O
+  'z_peach_what',       # P
+  'z_youyiC'            # Q
+]
