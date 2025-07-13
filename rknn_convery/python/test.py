@@ -8,25 +8,27 @@ import cv2
 from rknn.api import RKNN
 
 # Model from https://github.com/airockchip/rknn_model_zoo
-ONNX_MODEL = '../exp72/weights/best.onnx'
-RKNN_MODEL = '../exp72/weights/best.rknn'
+ONNX_MODEL = 'yolov5s_80.onnx' 
+RKNN_MODEL = 'yolov5s_80.rknn'
 IMG_PATH = '../test_image'#input
-# IMG_PATH = '../images_market/38_jpg.rf.d423771c90ed08981f3b567e80c071e1.jpg'
 OUTPUT_FOLDER = '../output'
-DATASET = 'list.txt'
+DATASET = 'dataset.txt'
 
-QUANTIZE_ON = 1
+platform='rk3566'
+QUANTIZE_ON = 0
+enable_det = 0
 
 OBJ_THRESH = 0.25
 NMS_THRESH = 0.45
 IMG_SIZE = 640
 
-CLASSES = ('JDB_can',  'baishi_black',  'baishi_blue',      'cp_ml',    'cp_nm',    'cp_peach',          'cp_yz', 
-    'dp_bottle',     'dp_can', 'kaishui',           'redbull_bottle',    'redbull_can',    'rio_gp',    'rio_lizhi', 
-    'rio_orange',    'rio_peach',    'rio_sb',    'rusuanjun',    'wanglaoji',     'wangzai',     'yangledu',     'yingyang_apple', 
-    'yingyang_purple',    'yingyang_white',    'yingyang_zao')
-
-# CLASSES = ('Dead', 'chicken')
+CLASSES = ("person", "bicycle", "car","motorbike ","aeroplane ","bus ","train","truck ","boat","traffic light",
+           "fire hydrant","stop sign ","parking meter","bench","bird","cat","dog ","horse ","sheep","cow","elephant",
+           "bear","zebra ","giraffe","backpack","umbrella","handbag","tie","suitcase","frisbee","skis","snowboard","sports ball","kite",
+           "baseball bat","baseball glove","skateboard","surfboard","tennis racket","bottle","wine glass","cup","fork","knife ",
+           "spoon","bowl","banana","apple","sandwich","orange","broccoli","carrot","hot dog","pizza ","donut","cake","chair","sofa",
+           "pottedplant","bed","diningtable","toilet ","tvmonitor","laptop	","mouse	","remote ","keyboard ","cell phone","microwave ",
+           "oven ","toaster","sink","refrigerator ","book","clock","vase","scissors ","teddy bear ","hair drier", "toothbrush ")
 
 def xywh2xyxy(x):
     # Convert [x, y, w, h] to [x1, y1, x2, y2]
@@ -238,7 +240,7 @@ if __name__ == '__main__':
 
     # pre-process config
     print('--> Config model')
-    rknn.config(mean_values=[[0, 0, 0]], std_values=[[255, 255, 255]], target_platform='rk3588')
+    rknn.config(mean_values=[[0, 0, 0]], std_values=[[255, 255, 255]], target_platform = platform)
     print('done')
 
     # Load ONNX model
@@ -309,52 +311,52 @@ if __name__ == '__main__':
     #     draw(img_1, boxes, scores, classes)
     #     cv2.imwrite('result.jpg', img_1)
     #     print('Save results to result.jpg!')
+    if enable_det:
+        if not os.path.exists(OUTPUT_FOLDER):
+            os.makedirs(OUTPUT_FOLDER)
+            print(f"Created output folder: {OUTPUT_FOLDER}")
 
-    if not os.path.exists(OUTPUT_FOLDER):
-        os.makedirs(OUTPUT_FOLDER)
-        print(f"Created output folder: {OUTPUT_FOLDER}")
+        # 遍历输入文件夹中的所有图片
+        for filename in os.listdir(IMG_PATH):
+            if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp')):
+                img_path = os.path.join(IMG_PATH, filename)
+                output_path = os.path.join(OUTPUT_FOLDER, filename)
 
-    # 遍历输入文件夹中的所有图片
-    for filename in os.listdir(IMG_PATH):
-        if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp')):
-            img_path = os.path.join(IMG_PATH, filename)
-            output_path = os.path.join(OUTPUT_FOLDER, filename)
+                print(f'Processing: {img_path}')
+                
+                # 读取图片
+                img = cv2.imread(img_path)
+                if img is None:
+                    print(f"Failed to read {img_path}")
+                    continue
 
-            print(f'Processing: {img_path}')
-            
-            # 读取图片
-            img = cv2.imread(img_path)
-            if img is None:
-                print(f"Failed to read {img_path}")
-                continue
+                # 预处理
+                img_preprocessed, ratio, (dw, dh) = letterbox(img, new_shape=(IMG_SIZE, IMG_SIZE))
+                img_preprocessed = cv2.cvtColor(img_preprocessed, cv2.COLOR_BGR2RGB)
+                img_preprocessed = cv2.resize(img_preprocessed, (IMG_SIZE, IMG_SIZE))
 
-            # 预处理
-            img_preprocessed, ratio, (dw, dh) = letterbox(img, new_shape=(IMG_SIZE, IMG_SIZE))
-            img_preprocessed = cv2.cvtColor(img_preprocessed, cv2.COLOR_BGR2RGB)
-            img_preprocessed = cv2.resize(img_preprocessed, (IMG_SIZE, IMG_SIZE))
+                # 推理
+                img_input = np.expand_dims(img_preprocessed, 0)
+                outputs = rknn.inference(inputs=[img_input], data_format=['nhwc'])
 
-            # 推理
-            img_input = np.expand_dims(img_preprocessed, 0)
-            outputs = rknn.inference(inputs=[img_input], data_format=['nhwc'])
+                # 后处理
+                input0_data = outputs[0].reshape([3, -1] + list(outputs[0].shape[-2:]))
+                input1_data = outputs[1].reshape([3, -1] + list(outputs[1].shape[-2:]))
+                input2_data = outputs[2].reshape([3, -1] + list(outputs[2].shape[-2:]))
 
-            # 后处理
-            input0_data = outputs[0].reshape([3, -1] + list(outputs[0].shape[-2:]))
-            input1_data = outputs[1].reshape([3, -1] + list(outputs[1].shape[-2:]))
-            input2_data = outputs[2].reshape([3, -1] + list(outputs[2].shape[-2:]))
+                input_data = [
+                    np.transpose(input0_data, (2, 3, 0, 1)),
+                    np.transpose(input1_data, (2, 3, 0, 1)),
+                    np.transpose(input2_data, (2, 3, 0, 1))
+                ]
 
-            input_data = [
-                np.transpose(input0_data, (2, 3, 0, 1)),
-                np.transpose(input1_data, (2, 3, 0, 1)),
-                np.transpose(input2_data, (2, 3, 0, 1))
-            ]
+                boxes, classes, scores = yolov5_post_process(input_data)
 
-            boxes, classes, scores = yolov5_post_process(input_data)
-
-            # 绘制结果并保存
-            img_result = cv2.cvtColor(img_preprocessed, cv2.COLOR_RGB2BGR)
-            if boxes is not None:
-                draw(img_result, boxes, scores, classes)
-                cv2.imwrite(output_path, img_result)
-                print(f'Saved result to {output_path}')
+                # 绘制结果并保存
+                img_result = cv2.cvtColor(img_preprocessed, cv2.COLOR_RGB2BGR)
+                if boxes is not None:
+                    draw(img_result, boxes, scores, classes)
+                    cv2.imwrite(output_path, img_result)
+                    print(f'Saved result to {output_path}')
 
     rknn.release()

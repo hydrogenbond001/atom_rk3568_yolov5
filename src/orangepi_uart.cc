@@ -29,8 +29,6 @@ void *read_serial(void *arg)
  
 }
  
- 
- 
 void *write_serial(void *arg)
 {
 	while(1){
