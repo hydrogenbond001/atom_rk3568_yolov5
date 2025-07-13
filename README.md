@@ -9,6 +9,9 @@
 
 
 # 使用说明
+### 环境依赖
+  * sudo apt install g++-aarch64-linux-gnu
+  * sudo apt install gcc-aarch64-linux-gnu
 ### 演示
   * 系统需安装有**OpenCV** **CMake** **GCC，G++**
   * 下载Releases中的测试视频于项目根目录,运行编译，
