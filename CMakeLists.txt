@@ -36,13 +36,9 @@ set(RKNN_RT_LIB ${CMAKE_SOURCE_DIR}/include/librknnrt.so)
 set(RGA_PATH ${CMAKE_SOURCE_DIR}/include/3rdparty/rga/RK3588)
 set(RGA_LIB ${RGA_PATH}/lib/Linux//${LIB_ARCH}/librga.so)
 
-
 include_directories(${RKNN_API_PATH}/include)
 include_directories(${CMAKE_SOURCE_DIR}/include/3rdparty)
 include_directories(${RGA_PATH}/include)
-
-
-
 
 #WiringPi
 #find_library(WIRINGPI_LIB wiringPi)
@@ -53,9 +49,9 @@ include_directories(${RGA_PATH}/include)
 include_directories( ${CMAKE_SOURCE_DIR}/include)
 
 add_executable(rknn_yolov5_demo
-		src/rk3568_market.cc
-		# src/video.cc     #detect video
-		# src/pic.cc        #detect picture
+		# src/rk3568_market.cc
+		src/video.cc                #detect video
+		# src/pic.cc                #detect picture
     src/postprocess.cc
     src/preprocess.cc
     #src/rkYolov5s.cc

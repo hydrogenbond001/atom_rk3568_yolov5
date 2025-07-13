@@ -41,38 +41,3 @@ make -j4
 make install
 
 echo "编译完成，输出位于 $BUILD_DIR/$BUILD_SUBDIR"
-
-
-
-
-
-
-
-
-# # TARGET_SOC="rk3568/rk3588"
-# GCC_COMPILER=aarch64-linux-gnu
-
-# export LD_LIBRARY_PATH=${TOOL_CHAIN}/lib64:$LD_LIBRARY_PATH
-# export CC=${GCC_COMPILER}-gcc
-# export CXX=${GCC_COMPILER}-g++
-
-# ROOT_PWD=$( cd "$( dirname $0 )" && cd -P "$( dirname "$SOURCE" )" && pwd )
-
-# # build
-# BUILD_DIR=${ROOT_PWD}/build
-
-# if [ ! -d "${BUILD_DIR}" ]; then
-#   mkdir -p ${BUILD_DIR}
-# fi
-
-# cd ${BUILD_DIR}
-# cmake .. -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_TOOLCHAIN_FILE=../toolchains/toolchain.cmake
-# make -j8
-# make install
-# cd -
-
-# # relu版本
-# #cd install/rknn_yolov5_demo_Linux/ && ./rknn_yolov5_demo ./model/RK3588/yolov5s-640-640.rknn ../../720p60hz.mp4
-# # 使用摄像头
-# # cd install/rknn_yolov5_demo_Linux/ && ./rknn_yolov5_demo ./model/RK3588/yolov5s-640-640.rknn 0
-
