@@ -7,7 +7,8 @@ project(rknn_yolov5_demo)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# set(CMAKE_CXX_FLAGS "-pthread")
+set(CMAKE_CXX_FLAGS "-pthread")
+# find_package(Threads REQUIRED)
 
 if(CMAKE_TOOLCHAIN_FILE)
     message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
@@ -50,8 +51,9 @@ include_directories( ${CMAKE_SOURCE_DIR}/include)
 
 add_executable(rknn_yolov5_demo
 		# src/rk3568_market.cc
-		src/video.cc                #detect video
+		# src/video.cc                #detect video
 		# src/pic.cc                #detect picture
+    src/thread.cc
     src/postprocess.cc
     src/preprocess.cc
     #src/rkYolov5s.cc
@@ -62,6 +64,7 @@ target_link_libraries(rknn_yolov5_demo
   ${OpenCV_LIBS}
   ${RGA_LIB}
   #${WIRINGPI_LIB}
+  ${CMAKE_THREAD_LIBS_INIT}
 )
 
 
