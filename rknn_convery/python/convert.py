@@ -16,8 +16,8 @@ def parse_arg():
 
     # model_path = sys.argv[1]
     # platform = sys.argv[2]
-    model_path = "../exp61/weights/best.onnx"
-    platform = "rk3568"
+    model_path = "gongxun.onnx"
+    platform = "rk3566"
 
     do_quant = DEFAULT_QUANT
     if len(sys.argv) > 3:
