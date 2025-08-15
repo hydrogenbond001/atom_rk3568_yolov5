@@ -8,15 +8,15 @@ import cv2
 from rknn.api import RKNN
 
 # Model from https://github.com/airockchip/rknn_model_zoo
-ONNX_MODEL = 'yolov5s_80.onnx' 
-RKNN_MODEL = 'yolov5s_80.rknn'
+ONNX_MODEL = '/mnt/c/Users/L3101/Documents/github/yolov5-ONNX/runs/train/exp103/weights/best.onnx' 
+RKNN_MODEL = '/mnt/c/Users/L3101/Documents/github/yolov5-ONNX/runs/train/exp103/weights/best.rknn'
 IMG_PATH = '../test_image'#input
 OUTPUT_FOLDER = '../output'
 DATASET = 'dataset.txt'
 
-platform='rk3566'
-QUANTIZE_ON = 0
-enable_det = 0
+platform='rk3588'
+QUANTIZE_ON = 1
+enable_det = 1
 
 OBJ_THRESH = 0.25
 NMS_THRESH = 0.45

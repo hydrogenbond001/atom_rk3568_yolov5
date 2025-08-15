@@ -8,6 +8,8 @@
 /rknn_convery/exp*
 *.rar
 /yolocam/
+/rknn_convery/output/
+
 # Prerequisites
 *.d
 
