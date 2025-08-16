@@ -7,7 +7,8 @@ project(rknn_yolov5_demo)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# set(CMAKE_CXX_FLAGS "-pthread")
+set(CMAKE_CXX_FLAGS "-pthread")
+# find_package(Threads REQUIRED)
 
 if(CMAKE_TOOLCHAIN_FILE)
     message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
@@ -52,6 +53,7 @@ add_executable(rknn_yolov5_demo
 		# src/rk3568_market.cc
 		src/video.cc                #detect video
 		# src/pic.cc                #detect picture
+    # src/thread.cc
     src/postprocess.cc
     src/preprocess.cc
     #src/rkYolov5s.cc
@@ -62,6 +64,7 @@ target_link_libraries(rknn_yolov5_demo
   ${OpenCV_LIBS}
   ${RGA_LIB}
   #${WIRINGPI_LIB}
+  ${CMAKE_THREAD_LIBS_INIT}
 )
 
 
@@ -77,4 +80,4 @@ install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_imgcodecs.so.410" DESTINAT
 install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_videoio.so.410" DESTINATION lib)
 install(DIRECTORY model DESTINATION ./)
 install(FILES  "scripts/run_test.sh" DESTINATION ./)
-install(FILES  "market1.mp4" DESTINATION ./)
+# install(FILES  "market1.mp4" DESTINATION ./)
