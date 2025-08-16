@@ -8,13 +8,22 @@ import cv2
 from rknn.api import RKNN
 
 # Model from https://github.com/airockchip/rknn_model_zoo
+<<<<<<< HEAD
 ONNX_MODEL = 'gongxun.onnx' 
 RKNN_MODEL = 'gongxun.rknn'
+=======
+ONNX_MODEL = '/mnt/c/Users/L3101/Documents/github/yolov5-ONNX/runs/train/exp103/weights/best.onnx' 
+RKNN_MODEL = '/mnt/c/Users/L3101/Documents/github/yolov5-ONNX/runs/train/exp103/weights/best.rknn'
+>>>>>>> 6fad4282664aae06ae2bb084930a68adaa14e820
 IMG_PATH = '../test_image'#input
 OUTPUT_FOLDER = '../output'
 DATASET = 'dataset.txt'
 
+<<<<<<< HEAD
 platform='rk3566'
+=======
+platform='rk3588'
+>>>>>>> 6fad4282664aae06ae2bb084930a68adaa14e820
 QUANTIZE_ON = 1
 enable_det = 1
 

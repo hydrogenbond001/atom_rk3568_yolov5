@@ -252,7 +252,8 @@ int main(int argc, char **argv)
                                  std::cref(io_num), input_attrs.data(), output_attrs.data(),
                                  width, height, channel);
     std::thread serial_thread(serial_thread_func, std::ref(shared), std::string(argv[3]));
-    std::thread display_thread(display_thread_func, std::ref(shared))
+    std::thread display_thread(display_thread_func, std::ref(shared));
+
     // Wait for threads to finish
     capture_thread.join();
     inference_thread.join();

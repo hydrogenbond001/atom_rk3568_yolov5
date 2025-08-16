@@ -9,6 +9,8 @@
 *.rar
 *.zip
 /yolocam/
+/rknn_convery/output/
+
 # Prerequisites
 *.d
 
