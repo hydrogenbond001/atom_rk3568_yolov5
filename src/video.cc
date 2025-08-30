@@ -19,7 +19,7 @@
 #include <sys/ioctl.h>
 #include <string.h> // for strerror
 #include <errno.h>  // for errno
-
+/*
 void send_xy(int serial_fd, int id, int x, int y)
 {
 #pragma pack(push, 1)
@@ -123,7 +123,7 @@ const char update_and_judge(int serial_fd, int id, int x, int y)
   printf(direction ? direction : "No direction"); // 不用返回ID whois_visible
   printf("\r\n");
 }
-
+*/
 // Function prototypes
 static void dump_tensor_attr(rknn_tensor_attr *attr);
 double __get_us(struct timeval t);
@@ -446,8 +446,9 @@ int main(int argc, char **argv)
         uint8_t footer;   // 帧尾 0x55
       } SerialFrame;
 #pragma pack(pop)
-      update_and_judge(serial_fd, atoi(det_result->name), x, y);
-      printf("物料 %d: (%d, %d)  ", atoi(det_result->name), x, y);
+      // update_and_judge(serial_fd, atoi(det_result->name), x, y);
+      // printf("物料 %d: (%d, %d)  \r\n", atoi(det_result->name), x, y);
+      printf("物料 %d: (%d, %d)  ", i, x, y);
       if (y <= 6)
         continue;
 
@@ -479,6 +480,7 @@ int main(int argc, char **argv)
       write(serial_fd, &frame, sizeof(SerialFrame));
       // printf("Sent: ID=0x%02X, X=%d, Y=%d\n", obj_id, x, y);
     }
+    printf("\r\n");
     // show position
 
     // Show image
