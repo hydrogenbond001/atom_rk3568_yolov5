@@ -17,89 +17,6 @@
 #include <string.h> // for strerror
 #include <errno.h>  // for errno
 
-// 物料编号到数组索引的映射（1→0, 3→1, 5→2）
-#define MAT_ID_TO_INDEX(id) ((id == 2) ? 0 : ((id == 4) ? 1 : 2)) // 加个错误输入处理
-
-// 判断是否接近稳定点（避免微小抖动误判）
-#define IS_STABLE(x, stable_x) (fabs((x) - (stable_x)) < 10)
-
-int history[3][4];
-
-// 初始化历史数据
-void init_history()
-{
-    for (int i = 0; i < 3; i++)
-    {
-        history[i][0] = -1; // x
-        history[i][1] = -1; // y
-        history[i][2] = -1; // 稳定点x（未初始化）
-        history[i][3] = -1;
-    }
-}
-
-// 更新数据并判断转动方向
-const char *update_and_judge(int id, int x, int y)
-{
-    int idx = MAT_ID_TO_INDEX(id);
-    if (idx == -1)
-        return "Unknown ID"; // 非1/3/5号物料
-
-    float last_x = history[idx][0];
-    float last_y = history[idx][1];
-    // 如果是第一次检测到该物料，初始化数据
-    if (last_x == -1)
-    {
-        history[idx][0] = x;
-        history[idx][1] = y;
-        return "No previous data";
-    }
-
-    // 如果不动，视为未转动
-    static int stable_count[3] = {0};
-    if (IS_STABLE(x, last_x) && IS_STABLE(y, last_y))
-    {
-        stable_count[idx]++;
-        if (stable_count[idx] > 5)
-        { // 连续5帧不动则更新稳定点
-            history[idx][2] = x;
-            history[idx][3] = y;
-            stable_count[idx] = 0;
-            static char stable_str[32]; // 用于返回稳定点信息的缓冲区
-            snprintf(stable_str, sizeof(stable_str), "Stable:%d,%d\r\n", x, y);
-            return stable_str;
-        }
-    }
-    else
-    {
-        stable_count[idx] = 0;
-    }
-
-    // if (IS_STABLE(x, last_x))
-    // {
-    //     static char stable_str[32]; // 用于返回稳定点信息的缓冲区
-    //     snprintf(stable_str, sizeof(stable_str), "Stable:%.1f,%.1f", x, y);
-    //     return stable_str; // stale_x,stale_y;
-    // }
-
-    const char *direction = NULL;
-    if (x > last_x + 10)
-    {
-        direction = "Right (Clockwise)"; // 发送rotation_dir
-    }
-    else if (x < last_x - 10)
-    {
-        direction = "Left (Counter-Clockwise)"; // 发送rotation_dir
-    }
-
-    // 更新最新坐标
-    history[idx][0] = x;
-    history[idx][1] = y;
-
-    return direction ? direction : "No direction"; // 返回ID whois_visible
-}
-//
-//
-//
 // Shared data structure between threads
 struct SharedData
 {
@@ -144,16 +61,31 @@ int flag = 0;
 int argc_para_flag = 0;
 int main(int argc, char **argv)
 {
-    if (argc <= 4)
-    { // 检查参数数量改为4
-        std::cerr << "Usage: " << argv[0] << " <model_path> <video_source> <serial_port> <flag init value>" << std::endl;
+    SharedData shared;
+    if (argc <= 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " <model_path> <video_path> [serial_port] [flag] [argc_para_flag]" << std::endl;
+        std::cerr << "Note: serial_port is optional. If provided, serial transmission will be enabled." << std::endl;
         return -1;
     }
 
-    // 初始化共享数据
-    SharedData shared;
-    shared.flag = argv[4][0]; // 设置初始flag值
-    argc_para_flag = argv[5][0];
+    // 解析可选参数
+    bool use_serial = (argc > 3) && (strcmp(argv[3], "") != 0); // 检查串口参数是否提供且非空
+    std::string serial_port;
+    if (use_serial)
+    {
+        serial_port = std::string(argv[3]);
+    }
+
+    // 解析其他可选参数(flag和argc_para_flag)
+    if (argc > 4)
+    {
+        shared.flag = argv[4][0]; // 设置初始flag值
+    }
+    if (argc > 5)
+    {
+        argc_para_flag = argv[5][0];
+    }
     // Initialize RKNN model
     int model_size = 0;
     unsigned char *model_data = load_model(argv[1], &model_size);
@@ -251,13 +183,22 @@ int main(int argc, char **argv)
     std::thread inference_thread(inference_thread_func, ctx, std::ref(shared),
                                  std::cref(io_num), input_attrs.data(), output_attrs.data(),
                                  width, height, channel);
-    std::thread serial_thread(serial_thread_func, std::ref(shared), std::string(argv[3]));
+    // std::thread serial_thread(serial_thread_func, std::ref(shared), std::string(argv[3]));
+    std::thread serial_thread;
+    if (use_serial)
+    {
+        serial_thread = std::thread(serial_thread_func, std::ref(shared), serial_port);
+    }
     std::thread display_thread(display_thread_func, std::ref(shared));
 
     // Wait for threads to finish
     capture_thread.join();
     inference_thread.join();
-    serial_thread.join();
+    // serial_thread.join();
+    if (use_serial && serial_thread.joinable())
+    {
+        serial_thread.join();
+    }
     display_thread.join();
 
     // Cleanup
@@ -438,7 +379,7 @@ void serial_thread_func(SharedData &shared, const std::string &serial_port)
     if (serial_fd < 0)
     {
         std::cerr << "Failed to open serial port: " << serial_port << std::endl;
-        shared.exit_flag = true;
+        // 不设置exit_flag，仅退出当前线程
         return;
     }
 #pragma pack(push, 1)
@@ -478,8 +419,8 @@ void serial_thread_func(SharedData &shared, const std::string &serial_port)
                 {
                     int x = (result.box.left + result.box.right) / 2;
                     int y = (result.box.top + result.box.bottom) / 2;
-                    const char *www = update_and_judge(atoi(result.name), x, y);
-                    printf("物料 %d: (%d, %d) → %s\n", atoi(result.name), x, y, www);
+                    // const char *www = update_and_judge(atoi(result.name), x, y);
+                    printf("物料 %s: (%d, %d) ", result.name, x, y);
                     if (y <= 6)
                         continue;
 
@@ -608,7 +549,7 @@ void display_thread_func(SharedData &shared)
             }
         }
 
-        if (has_new_frame )//&& argc_para_flag
+        if (has_new_frame) //&& argc_para_flag
         {
             cv::imshow("Detection", frame_to_display);
             // 检查退出按键
