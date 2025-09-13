@@ -1,3 +1,10 @@
+/build/
+/install/
+
+rknn_convery/exp20/*.jpg
+rknn_convery/exp20/*.png
+rknn_convery/exp20/*.csv
+rknn_convery/exp20/*.yaml
 # Prerequisites
 *.d
 
