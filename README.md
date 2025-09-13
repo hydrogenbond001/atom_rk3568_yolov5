@@ -19,6 +19,17 @@
   bash ./build-linux_RK3568.sh
   ```
   
+  编译主程序选择，修改CMakelist文件
+  ```
+  add_executable(rknn_yolov5_demo
+		src/rk3568_market.cc
+		# src/video.cc     #detect video
+		# src/pic.cc        #detect picture
+    src/postprocess.cc
+    src/preprocess.cc
+    #src/rkYolov5s.cc
+)
+```
 选择编译环境:在板子上编译选择1，电脑上编译选择2
 ```
 (base) ph@PH:~/app_project_test/atom_rk3568_yolov5$ ./build-linux_RK35XX.sh 
