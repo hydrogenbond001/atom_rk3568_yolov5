@@ -5,7 +5,7 @@
 * **在板端和x86上都可编译部署**
 
 # 更新说明
-* 将RK3568与RK3588都可以使用.
+* 将RK356X与RK3588都可以使用.
 
 
 # 使用说明
@@ -16,16 +16,35 @@
   * 系统需安装有**OpenCV** **CMake** **GCC，G++**
   * 下载Releases中的测试视频于项目根目录,运行编译，
   ```
-  bash build-linux_RK3568.sh
+  bash ./build-linux_RK3568.sh
   ```
   
-  * 编译完成后进入install运行命令./rknn_yolov5_demo **模型所在路径** **图片，视频所在路径/摄像头序号**
+选择编译环境:在板子上编译选择1，电脑上编译选择2
+```
+(base) ph@PH:~/app_project_test/atom_rk3568_yolov5$ ./build-linux_RK35XX.sh 
+请选择编译方式：
+1. aarch64 本地编译
+2. 交叉编译 (x86_64 到 aarch64)
+3. 清理构建目录
+请输入选项 (1/2/3):2
+```
+
+
+  * 编译完成后cd进入```atom_rk3568_yolov5/install/rknn_yolov5_demo_Linux/```
+  
+  运行命令./rknn_yolov5_demo **模型所在路径** **图片，视频所在路径/摄像头序号**
   ```
   ./rknn_yolov5_demo ./model/yolov5s3568_80.rknn ./bus.jpg
   ./rknn_yolov5_demo ./model/yolov5s3568_80.rknn 10
   ./rknn_yolov5_demo ./model/yolov5s3568_80.rknn ./*.mp4
   ```
 
+  market2分支需要增加/dev/ttyS3 A 选择输出串口和输出数据类型 A（all） R/G/B （不同颜色的物料和色环，针对工训比赛）
+  ```
+  ./rknn_yolov5_demo ./model/yolov5s3568_80.rknn ./bus.jpg /dev/ttyS3 A
+  ./rknn_yolov5_demo ./model/yolov5s3568_80.rknn 10 /dev/ttyS3 A
+  ./rknn_yolov5_demo ./model/yolov5s3568_80.rknn ./*.mp4 /dev/ttyS3 A
+  ```
 # 帧率测试
 * 使用performance.sh进行CPU/NPU定频尽量减少误差
 * 测试模型来源: 自己转化或官方模型
