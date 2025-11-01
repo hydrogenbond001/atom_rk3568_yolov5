@@ -2,9 +2,9 @@ import sys
 
 from rknn.api import RKNN
 
-DATASET_PATH = 'list.txt'
-DEFAULT_RKNN_PATH = 'conv.rknn'
-DEFAULT_QUANT = 0
+DATASET_PATH = 'dataset.txt'
+DEFAULT_RKNN_PATH = 'yolov5s3576_80.rknn'
+DEFAULT_QUANT = 1
 
 def parse_arg():
     if len(sys.argv) < 3:
@@ -16,8 +16,8 @@ def parse_arg():
 
     # model_path = sys.argv[1]
     # platform = sys.argv[2]
-    model_path = "gongxun.onnx"
-    platform = "rk3566"
+    model_path = "yolov5s_80.onnx"
+    platform = "rk3576"
 
     do_quant = DEFAULT_QUANT
     if len(sys.argv) > 3:

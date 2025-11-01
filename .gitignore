@@ -10,7 +10,7 @@
 *.zip
 /yolocam/
 /rknn_convery/output/
-
+*.rknn
 # Prerequisites
 *.d
 
