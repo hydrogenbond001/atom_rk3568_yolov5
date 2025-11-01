@@ -22,8 +22,8 @@
   编译主程序选择，修改CMakelist文件
   ```
   add_executable(rknn_yolov5_demo
-		src/rk3568_market.cc
-		# src/video.cc     #detect video
+		# src/rk3568_market.cc
+		src/video.cc     #detect video
 		# src/pic.cc        #detect picture
     src/postprocess.cc
     src/preprocess.cc
@@ -32,7 +32,7 @@
 ```
 选择编译环境:在板子上编译选择1，电脑上编译选择2
 ```
-(base) ph@PH:~/app_project_test/atom_rk3568_yolov5$ ./build-linux_RK35XX.sh 
+~/atom_rk3568_yolov5$ ./build-linux_RK35XX.sh 
 请选择编译方式：
 1. aarch64 本地编译
 2. 交叉编译 (x86_64 到 aarch64)

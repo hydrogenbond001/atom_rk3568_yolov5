@@ -69,15 +69,9 @@ target_link_libraries(rknn_yolov5_demo
 
 
 # install target and libraries
-# set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install/rknn_yolov5_demo_${CMAKE_SYSTEM_NAME})
 install(TARGETS rknn_yolov5_demo DESTINATION ./)
-install(PROGRAMS ${RKNN_RT_LIB} DESTINATION lib)
-install(PROGRAMS ${RGA_LIB} DESTINATION lib)
-install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_core.so.410" DESTINATION lib)
-install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_highgui.so.410" DESTINATION lib)
-install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_imgproc.so.410" DESTINATION lib)
-install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_imgcodecs.so.410" DESTINATION lib)
-install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_videoio.so.410" DESTINATION lib)
+# install(PROGRAMS ${RKNN_RT_LIB} DESTINATION lib)
+# install(PROGRAMS ${RGA_LIB} DESTINATION lib)
+install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_world.so.410" DESTINATION lib)
 install(DIRECTORY model DESTINATION ./)
 install(FILES  "scripts/run_test.sh" DESTINATION ./)
-# install(FILES  "market1.mp4" DESTINATION ./)

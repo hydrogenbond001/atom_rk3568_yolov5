@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-Blue_box
-Blue_circle
-Green_box
-Green_circle
-Red_box
-Red_circle
-circle
-=======
 person
 bicycle
 car
@@ -87,4 +78,3 @@ scissors
 teddy bear
 hair drier
 toothbrush
->>>>>>> 6fad4282664aae06ae2bb084930a68adaa14e820
