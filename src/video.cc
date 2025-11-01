@@ -265,7 +265,7 @@ int setup_serial_port(const std::string &serial_port, int baud_rate)
 }
 int main(int argc, char **argv)
 {
-  if (argc <= 4)
+  if (argc <= 3)
   { // 检查参数数量改为4
     std::cerr << "Usage: " << argv[0] << " <model_path> <video_source> <serial_port> <flag init value>" << std::endl;
     return -1;
