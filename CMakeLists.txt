@@ -50,7 +50,7 @@ include_directories(${RGA_PATH}/include)
 include_directories( ${CMAKE_SOURCE_DIR}/include)
 
 add_executable(rknn_yolov5_demo
-		# src/rk3568_market.cc
+		# src/mlsd.cc
 		src/video.cc                #detect video
 		# src/pic.cc                #detect picture
     # src/thread.cc
