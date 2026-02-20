@@ -16,7 +16,7 @@
   * 系统需安装有**OpenCV** **CMake** **GCC，G++**
   * 下载Releases中的测试视频于项目根目录,运行编译，
   ```
-  bash ./build-linux_RK3568.sh
+  bash ./build_RK35XX.sh
   ```
   
   编译主程序选择，修改CMakelist文件
