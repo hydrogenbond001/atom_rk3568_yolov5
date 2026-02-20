@@ -50,9 +50,9 @@ include_directories(${RGA_PATH}/include)
 include_directories( ${CMAKE_SOURCE_DIR}/include)
 
 add_executable(rknn_yolov5_demo
-		# src/mlsd.cc
-		src/video.cc                #detect video
-		# src/pic.cc                #detect picture
+	# src/mlsd.cc
+	src/video.cc                #detect video
+	# src/pic.cc                #detect picture
     # src/thread.cc
     src/postprocess.cc
     src/preprocess.cc
@@ -70,8 +70,8 @@ target_link_libraries(rknn_yolov5_demo
 
 # install target and libraries
 install(TARGETS rknn_yolov5_demo DESTINATION ./)
-# install(PROGRAMS ${RKNN_RT_LIB} DESTINATION lib)
-# install(PROGRAMS ${RGA_LIB} DESTINATION lib)
+install(PROGRAMS ${RKNN_RT_LIB} DESTINATION lib)
+install(PROGRAMS ${RGA_LIB} DESTINATION lib)
 install(PROGRAMS "toolchains/aarch64_so/lib/libopencv_world.so.410" DESTINATION lib)
 install(DIRECTORY model DESTINATION ./)
 install(FILES  "scripts/run_test.sh" DESTINATION ./)

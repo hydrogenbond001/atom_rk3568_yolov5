@@ -64,11 +64,18 @@
 
 
 # 补充
-* 异常处理尚未完善, 目前仅支持rk3588/rk3588s下的运行
+* 异常处理尚未完善, 目前仅支持rk356x/rk3576/rk3588系列下的运行
 * 模型转换使用[rknn-toolkit2](https://github.com/airockchip/rknn-toolkit2)
 * 如使用自己训练的模型部署时需要修改model下的coco_80_labels_list.txt文件和postprocess.h中的OBJ_CLASS_NUM
 
-# Acknowledgements
+* 依赖库报错修复
+  ```
+  libwebp.so.7   sudo apt install libwebp7
+  ```
+
+
+
+# 参考代码
 * https://github.com/leafqycc/rknn-cpp-Multithreading
 * https://github.com/hydrogenbond001/rknn-yolov5-cpp
 * https://github.com/rockchip-linux/rknpu2

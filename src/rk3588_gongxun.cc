@@ -19,7 +19,111 @@
 #include <sys/ioctl.h>
 #include <string.h> // for strerror
 #include <errno.h>  // for errno
+/*
+void send_xy(int serial_fd, int id, int x, int y)
+{
+#pragma pack(push, 1)
+  typedef struct
+  {
+    uint8_t header;   // 帧头 0xAA
+    uint8_t obj_id;   // 对象ID (0x01-0x06)
+    int16_t x;        // X坐标
+    int16_t y;        // Y坐标
+    uint8_t checksum; // 校验和 (obj_id ^ x_low ^ x_high ^ y_low ^ y_high)
+    uint8_t footer;   // 帧尾 0x55
+  } SerialFrame;
+#pragma pack(pop)
 
+  // 构造二进制帧
+  SerialFrame frame;
+  frame.header = 0xAA;
+  frame.obj_id = id; // atoi(det_result->name);
+  frame.x = static_cast<int16_t>(x);
+  frame.y = static_cast<int16_t>(y);
+  frame.checksum = id ^ (x & 0xFF) ^ ((x >> 8) & 0xFF) ^ (y & 0xFF) ^ ((y >> 8) & 0xFF);
+  frame.footer = 0x55;
+
+  // 发送帧
+  write(serial_fd, &frame, sizeof(SerialFrame));
+}
+// 物料编号到数组索引的映射（2→0, 4→1, 6→2）B G R
+#define MAT_ID_TO_INDEX(id) ((id == 2) ? 0 : ((id == 4) ? 1 : 2)) // 加个错误输入处理
+
+// 判断是否接近稳定点（避免微小抖动误判）
+#define IS_STABLE(x, stable_x) (fabs((x) - (stable_x)) < 10)
+
+int history[3][4];
+
+// 初始化历史数据
+void init_history()
+{
+  for (int i = 0; i < 3; i++)
+  {
+    history[i][0] = -1; // x
+    history[i][1] = -1; // y
+    history[i][2] = -1; // 稳定点x（未初始化）
+    history[i][3] = -1;
+  }
+}
+
+// 更新数据并判断转动方向
+const char update_and_judge(int serial_fd, int id, int x, int y)
+{
+  int idx = MAT_ID_TO_INDEX(id);
+  if (idx == -1)
+    printf("Unknown ID"); // 非1/3/5号物料
+
+  float last_x = history[idx][0];
+  float last_y = history[idx][1];
+  // 如果是第一次检测到该物料，初始化数据
+  if (last_x == -1)
+  {
+    history[idx][0] = x;
+    history[idx][1] = y;
+    printf("No previous data");
+  }
+
+  // 如果不动，视为未转动
+  static int stable_count[3] = {0};
+  if (IS_STABLE(x, last_x) && IS_STABLE(y, last_y))
+  {
+    stable_count[idx]++;
+    if (stable_count[idx] > 5)
+    { // 连续5帧不动则更新稳定点
+      history[idx][2] = x;
+      history[idx][3] = y;
+      stable_count[idx] = 0;
+      static char stable_str[32]; // 用于返回稳定点信息的缓冲区
+      snprintf(stable_str, sizeof(stable_str), "Stable:%d,%d\r\n", x, y);
+      send_xy(serial_fd, 0x09, x, y);
+      printf(stable_str);
+    }
+  }
+  else
+  {
+    stable_count[idx] = 0;
+  }
+
+  const char *direction = NULL;
+  if (x > last_x + 10)
+  {
+    direction = "Right"; // 发送rotation_dir
+    send_xy(serial_fd, 0x08, idx, 1);
+  }
+  else if (x < last_x - 10)
+  {
+    direction = "Left "; // 发送rotation_dir
+    send_xy(serial_fd, 0x08, idx, 2);
+  }
+
+  // 更新最新坐标
+  history[idx][0] = x;
+  history[idx][1] = y;
+
+  printf(direction ? direction : "No direction"); // 不用返回ID whois_visible
+  printf("\r\n");
+}
+*/
 // Function prototypes
 static void dump_tensor_attr(rknn_tensor_attr *attr);
 double __get_us(struct timeval t);
@@ -330,6 +434,50 @@ int main(int argc, char **argv)
       int y = (y1 + y2) / 2;
       cv::rectangle(img, cv::Point(x1, y1), cv::Point(x2, y2), cv::Scalar(0, 0, 255), 3);
       cv::putText(img, text, cv::Point(x1, y1 + 12), cv::FONT_HERSHEY_SIMPLEX, 0.4, cv::Scalar(255, 255, 255));
+
+#pragma pack(push, 1)
+      typedef struct
+      {
+        uint8_t header;   // 帧头 0xAA
+        uint8_t obj_id;   // 对象ID (0x01-0x06)
+        int16_t x;        // X坐标
+        int16_t y;        // Y坐标
+        uint8_t checksum; // 校验和 (obj_id ^ x_low ^ x_high ^ y_low ^ y_high)
+        uint8_t footer;   // 帧尾 0x55
+      } SerialFrame;
+#pragma pack(pop)
+      // update_and_judge(serial_fd, atoi(det_result->name), x, y);
+      // printf("物料 %d: (%d, %d)  \r\n", atoi(det_result->name), x, y);
+      printf("物料 %d: (%d, %d)  ", i, x, y);
+      if (y <= 6)
+        continue;
+
+      uint8_t obj_id = 0;
+      if (strcmp(det_result->name, "1") == 0 && (flag == 'r' || flag == 'A'))
+        obj_id = 0x01;
+      else if (strcmp(det_result->name, "2") == 0 && (flag == 'r' || flag == 'A'))
+        obj_id = 0x02;
+      else if (strcmp(det_result->name, "3") == 0 && (flag == 'g' || flag == 'A'))
+        obj_id = 0x03;
+      else if (strcmp(det_result->name, "4") == 0 && (flag == 'g' || flag == 'A'))
+        obj_id = 0x04;
+      else if (strcmp(det_result->name, "5") == 0 && (flag == 'b' || flag == 'A'))
+        obj_id = 0x05;
+      else if (strcmp(det_result->name, "6") == 0 && (flag == 'b' || flag == 'A'))
+        obj_id = 0x06;
+      else
+        continue;
+      // 构造二进制帧
+      SerialFrame frame;
+      frame.header = 0xAA;
+      frame.obj_id = obj_id; // atoi(det_result->name);
+      frame.x = static_cast<int16_t>(x);
+      frame.y = static_cast<int16_t>(y);
+      frame.checksum = obj_id ^ (x & 0xFF) ^ ((x >> 8) & 0xFF) ^ (y & 0xFF) ^ ((y >> 8) & 0xFF);
+      frame.footer = 0x55;
+
+      // 发送帧
+      write(serial_fd, &frame, sizeof(SerialFrame));
       // printf("Sent: ID=0x%02X, X=%d, Y=%d\n", obj_id, x, y);
     }
     printf("\r\n");

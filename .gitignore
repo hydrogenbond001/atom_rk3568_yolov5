@@ -11,6 +11,7 @@
 /yolocam/
 /rknn_convery/output/*
 *.rknn
+*.onnx
 # Prerequisites
 *.d
 
